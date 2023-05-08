@@ -19,6 +19,7 @@ import { ResultadosBusquedaComponent } from './pagina/resultados-busqueda/result
 import { HistorialComprasComponent } from './pagina/historial-compras/historial-compras.component';
 import { DetalleProductoComponent } from './pagina/detalle-producto/detalle-producto.component';
 import { ContactoComponent } from './pagina/contacto/contacto.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,9 @@ import { ContactoComponent } from './pagina/contacto/contacto.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

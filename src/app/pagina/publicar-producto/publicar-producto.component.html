@@ -1,1 +1,32 @@
 <p>publicar-producto works!</p>
+
+<form #f="ngForm" (ngSubmit)="crearProducto()">
+    <div>
+        <label>Nombre: </label>
+        <input type="text" name="nombre" [(ngModel)]="producto.nombre" required />
+    </div>
+    <div>
+        <label>Descripcion: </label>
+        <textarea name="descripcion" [(ngModel)]="producto.descripcion" required></textarea>
+    </div>
+    <div>
+        <label>Precio: </label>
+        <input type="number" name="precio" [(ngModel)]="producto.precio" required />
+    </div>
+    <div>
+        <label>Unidades: </label>
+        <input type="number" name="unidades" [(ngModel)]="producto.unidades" required />
+    </div>
+    <div>
+        <label>Imagen: </label>
+        <input type="file" name="imagenes" (change)="onFileChange($event)" multiple />
+    </div>
+    <div>
+        <label>Categoría: </label>
+        <select name="categoria" [(ngModel)]="producto.categoria" required>
+            <option value="" selected>Seleccione una categoría</option>
+            <option [value]="i+1" *ngFor="let item of categorias; index as i">{{item}}</option>
+        </select>
+    </div>
+    <button type="submit" [disabled]="f.invalid">Crear nuevo producto</button>
+</form>

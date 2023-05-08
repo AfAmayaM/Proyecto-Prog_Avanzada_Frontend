@@ -3,14 +3,20 @@ import { RouterModule, Routes } from '@angular/router';
 import { InicioComponent } from './pagina/inicio/inicio.component';
 import { LoginComponent } from './pagina/login/login.component';
 import { RegistroComponent } from './pagina/registro/registro.component';
+import { PublicacionesComponent } from './pagina/publicaciones/publicaciones.component';
+import { PublicarProductoComponent } from './pagina/publicar-producto/publicar-producto.component';
+import { DetalleProductoComponent } from './pagina/detalle-producto/detalle-producto.component';
 
 
 const routes: Routes = [
   { path: "", component: InicioComponent },
   { path: "login", component: LoginComponent },
   { path: "registro", component: RegistroComponent },
+  { path: "publicaciones", component: PublicacionesComponent },
+  { path: "publicar-producto", component: PublicarProductoComponent },
+  { path: "detalle-producto", component: DetalleProductoComponent },
   { path: "**", pathMatch: "full", redirectTo: "" }
-  ];
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
