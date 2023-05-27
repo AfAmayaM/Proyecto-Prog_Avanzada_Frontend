@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { Buffer } from "buffer";
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,7 +21,11 @@ import { ResultadosBusquedaComponent } from './pagina/resultados-busqueda/result
 import { HistorialComprasComponent } from './pagina/historial-compras/historial-compras.component';
 import { DetalleProductoComponent } from './pagina/detalle-producto/detalle-producto.component';
 import { ContactoComponent } from './pagina/contacto/contacto.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BusquedaComponent } from './pagina/busqueda/busqueda.component';
+import { GestionPublicacionesComponent } from './pagina/gestion-publicaciones/gestion-publicaciones.component';
+import { AlertaComponent } from './pagina/alerta/alerta.component';
+import { UsuarioInterceptor } from './interceptor/usuario.interceptor';
 
 @NgModule({
   declarations: [
@@ -39,15 +45,22 @@ import { FormsModule } from '@angular/forms';
     ResultadosBusquedaComponent,
     HistorialComprasComponent,
     DetalleProductoComponent,
-    ContactoComponent
+    ContactoComponent,
+    BusquedaComponent,
+    GestionPublicacionesComponent,
+    AlertaComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
-
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: UsuarioInterceptor, multi: true }
+  ],
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }

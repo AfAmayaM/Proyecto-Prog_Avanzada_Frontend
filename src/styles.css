@@ -4,4 +4,105 @@
     border: solid rgba(0, 0, 0, .15);
     border-width: 1px 0;
     box-shadow: inset 0 0.5em 1.5em rgb(0 0 0 / 10%), inset 0 0.125em 0.5em rgb(0 0 0 / 15%);
-    }
+}
+
+.img-vertical {
+    overflow: hidden;
+}
+
+.img-vertical img {
+    width: auto;
+    height: 250px;
+}
+
+header {
+    background-color: #52B9A8;
+}
+
+.link {
+    color: #0D6EFD;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #52B9A8;
+}
+
+.detalle-producto {
+    padding: 50px;
+    border: 2px dashed #777;
+    border-radius: 30px;
+}
+
+.nav-link:hover {
+    color: #343434;
+}
+
+.btn-categoria {
+    margin: 0 2em;
+    border: 2px solid #777;
+    border-radius: 5px;
+    width: 50%;
+    height: 75%;
+}
+
+.recientes {
+    background: #fafafa;
+    width: 100%;
+}
+
+.carrito:hover {
+    color: #343434;
+}
+
+.img-gallery {
+    display: flex;
+    width: 100%;
+    height: 150px;
+}
+
+.img-gallery img {
+    width: 0px;
+    flex-grow: 1;
+    object-fit: cover;
+    opacity: .8;
+    transition: .5s ease;
+}
+
+.img-gallery img:hover {
+    cursor: pointer;
+    width: 100px;
+    opacity: 1;
+    filter: contrast(120%);
+}
+
+.border-img {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 4px;
+
+}
+
+.icono-etiqueta {
+    display: inline-block;
+    margin-right: 5px;
+    /* Espacio entre el icono y el texto */
+}
+
+.container {
+    position: relative;
+}
+
+.corner-button {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+.character-counter {
+    position: absolute;
+    right: 70px;
+    bottom: 20px;
+    color: gray;
+  }
+  

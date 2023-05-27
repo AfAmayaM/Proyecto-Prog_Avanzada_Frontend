@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CuentaDTO } from 'src/app/modelo/cuenta-dto';
 
 @Component({
   selector: 'app-cambiar-contrasenia',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class CambiarContraseniaComponent {
 
+  cuenta!: CuentaDTO;
+
+  constructor() {
+    this.cuenta = new CuentaDTO();
+  }
+
+  public cambiarContra() {
+
+  }
 }

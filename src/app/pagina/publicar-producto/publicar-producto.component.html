@@ -1,32 +1,103 @@
-<p>publicar-producto works!</p>
-
-<form #f="ngForm" (ngSubmit)="crearProducto()">
-    <div>
-        <label>Nombre: </label>
-        <input type="text" name="nombre" [(ngModel)]="producto.nombre" required />
+<h2 class="text-center mb-5">Publica tu producto</h2>
+<form #f="ngForm">
+    <div class="row publicar-producto">
+        <div class="col-sm-6">
+            <div class="row mb-2" *ngIf="archivos != null">
+                <img [src]="getObjectURL(archivos[0])" class="w-100" alt="imagen-producto">
+            </div>
+            <div class="row mb-4" *ngIf="archivos != null">
+                <div class="carousel">
+                    <div class="carousel-inner">
+                        <div *ngFor="let imagen of archivos" class="">
+                            <img [src]="getObjectURL(imagen)" class="img-thumbnail" alt="img-producto">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <input type="file" class="form-control w-75 mx-auto" name="imagenes" (change)="onFileChange($event)"
+                    multiple />
+            </div>
+            <div class="row">
+                <button type="submit" [disabled]="archivos == null" class="btn btn-primary w-75 mx-auto"
+                    (click)="subirImagenes()">
+                    <i class="fa-solid fa-cloud-arrow-up me-2"></i>Subir imágenes
+                </button>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="mb-3 row">
+                <div class="row">
+                    <label class="col-sm-2 col-form-label text-secondary"><b>Nombre</b></label>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 form-outline">
+                        <input #nombre="ngModel" class="form-control" [ngClass]=" nombre.invalid && (nombre.dirty || nombre.touched)
+                  ? 'is-invalid' : '' " type="text" name="nombre" [(ngModel)]="producto.nombre" required
+                            maxlength="50" />
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="row">
+                    <label class="col-sm-2 col-form-label text-secondary"><b>Descripción</b></label>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <textarea #descripcion="ngModel" class="form-control" [ngClass]="
+                descripcion.invalid &&
+                (descripcion.dirty || descripcion.touched)
+                  ? 'is-invalid'
+                  : ''
+              " type="number" name="descripcion" [(ngModel)]="producto.descripcion" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label text-secondary"><b>Categorias</b></label>
+                <div class="d-flex flex-wrap">
+                    <div *ngFor="let categoria of categorias" class="d-inline-flex align-items-center me-3">
+                        <input class="form-check-input me-2" type="checkbox" [name]="categoria.name"
+                            [(ngModel)]="categoria.checked" (change)="onCategoriasChange()" />
+                        <label class="form-check-label">{{ categoria.label }}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col">
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label text-secondary"><b>Unidades</b></label>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input #unidades="ngModel" class="form-control" [ngClass]="
+                  unidades.invalid && (unidades.dirty || unidades.touched)
+                    ? 'is-invalid'
+                    : ''
+                " type="number" name="unidades" [(ngModel)]="producto.unidades" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label text-secondary"><b>Precio</b></label>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input #precio="ngModel" step="50" class="form-control" [ngClass]="
+                  precio.invalid && (precio.dirty || precio.touched)
+                    ? 'is-invalid'
+                    : ''
+                " type="number" name="precio" [(ngModel)]="producto.precio" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" [disabled]="f.invalid" (click)="crearPublicacion()"
+                class="btn {{ esEdicion ? 'btn-primary' : 'btn-success' }} w-100 mt-3">
+                <i class="fa-solid {{ esEdicion ? 'fa-pencil' : 'fa-circle-plus' }} me-1"></i>{{ esEdicion ? "Modificar"
+                : "Publicar" }}
+            </button>
+        </div>
     </div>
-    <div>
-        <label>Descripcion: </label>
-        <textarea name="descripcion" [(ngModel)]="producto.descripcion" required></textarea>
-    </div>
-    <div>
-        <label>Precio: </label>
-        <input type="number" name="precio" [(ngModel)]="producto.precio" required />
-    </div>
-    <div>
-        <label>Unidades: </label>
-        <input type="number" name="unidades" [(ngModel)]="producto.unidades" required />
-    </div>
-    <div>
-        <label>Imagen: </label>
-        <input type="file" name="imagenes" (change)="onFileChange($event)" multiple />
-    </div>
-    <div>
-        <label>Categoría: </label>
-        <select name="categoria" [(ngModel)]="producto.categoria" required>
-            <option value="" selected>Seleccione una categoría</option>
-            <option [value]="i+1" *ngFor="let item of categorias; index as i">{{item}}</option>
-        </select>
-    </div>
-    <button type="submit" [disabled]="f.invalid">Crear nuevo producto</button>
 </form>

@@ -1,13 +1,28 @@
-<p>login works!</p>
-
-<form>
-    <div>
-        <label for="email">Email</label>
-        <input type="text" id="email" name="email"/>
+<div class="card">
+    <div class="card-body p-5">
+        <h2 class="text-center mb-5">Iniciar sesión</h2>
+        <form #f="ngForm" (submit)="login()">
+            <div class="mb-3 row">
+                <div class="col-sm-12">
+                    <input #email="ngModel" class="form-control" [ngClass]="email.invalid &&    
+(email.dirty || email.touched) ? 'is-invalid' : ''" type="email" name="email" placeholder="Email"
+                        [(ngModel)]="sesion.email" email required />
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-sm-12">
+                    <input #password="ngModel" class="form-control" [ngClass]="password.invalid &&
+    (password.dirty || password.touched) ? 'is-invalid' : ''" type="password" name="password" placeholder="Contraseña"
+                        [(ngModel)]="sesion.contrasenia" required />
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" [disabled]="f.invalid" class="col-sm-12 mt-4 mb-3 btn btn-primary">
+                    ¡Vamos!
+                </button>
+            </div>
+            <p class="m-1">¿Aún no tienes cuenta? <b><a routerLink="/registro" class="link">Registrate</a></b></p>
+            <p><b><a href="" class="link">¿Olvidaste tu contraseña?</a></b></p>
+        </form>
     </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password"/>
-    </div>
-    <button type="submit">Login</button>
-</form>
+</div>

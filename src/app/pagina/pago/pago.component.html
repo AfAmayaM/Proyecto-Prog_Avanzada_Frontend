@@ -1,1 +1,83 @@
-<p>pago works!</p>
+<h2 class="text-center mb-5">Paga tu orden</h2>
+<form #f="ngForm" (submit)="pagar()">
+    <div class="card mb-5" style="border: 1.5px solid #757575;">
+        <div class="card-header p-4 d-flex align-items-center">
+            <input #metodoPagoTarjeta="ngModel" class="form-check-input me-5" type="radio" name="metodoPagoTarjeta"
+                value="TARJETA_CREDITO" [(ngModel)]="compra.metodoPago" required (change)="toggle(1)">
+            <h4 class="text-secondary d-inline m-0">Tarjeta crédito o débito</h4>
+            <img class="mx-3" src="https://upload.wikimedia.org/wikipedia/commons/7/72/MasterCard_early_1990s_logo.png"
+                alt="visa_logo" height="30px">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="visa_logo" height="30px">
+        </div>
+        <div class="card-body p-5" style="background: #e0e0e0;" *ngIf="metodoTarjeta">
+            <div class="row">
+                <label class="text-secondary form-label">Nombre en la tarjeta </label>
+            </div>
+            <div class="mb-4 row">
+                <div class="col-sm-12">
+                    <input #nombreTarjeta="ngModel" class="form-control" [ngClass]="nombreTarjeta.invalid &&    
+    (nombreTarjeta.dirty || nombreTarjeta.touched) ? 'is-invalid' : ''" type="text" name="nombreTarjeta"
+                        [(ngModel)]="tarjeta.nombreTarjeta" required/>
+                </div>
+            </div>
+            <div class="row">
+                <label class="text-secondary form-label">Número de tarjeta</label>
+            </div>
+            <div class="mb-4 row">
+                <div class="col-sm-12">
+                    <input #numTarjeta="ngModel" class="form-control" [ngClass]="numTarjeta.invalid &&
+    (numTarjeta.dirty || numTarjeta.touched) ? 'is-invalid' : ''" type="text" name="numTarjeta"
+                        [(ngModel)]="tarjeta.numeroTarjeta" required />
+                </div>
+            </div>
+
+            <div class="mb-4 row">
+                <div class="col-sm-6">
+                    <div class="row">
+                        <label class="text-secondary form-label">Fecha de vencimiento </label>
+                    </div>
+                    <input #fechaVencimiento="ngModel" class="form-control" [ngClass]="fechaVencimiento.invalid &&
+    (fechaVencimiento.dirty || fechaVencimiento.touched) ? 'is-invalid' : ''" type="date" name="fechaVencimiento"
+                        [(ngModel)]="tarjeta.fechaVencimiento" required />
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <label class="text-secondary form-label">CVV</label>
+                    </div>
+                    <input #cvv="ngModel" class="form-control" maxlength="3" [ngClass]="cvv.invalid &&
+    (cvv.dirty || cvv.touched) ? 'is-invalid' : ''" type="text" name="cvv" [(ngModel)]="tarjeta.cvv" required />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3" style="border: 1.5px solid #757575;">
+        <div class="card-header p-4 d-flex align-items-center">
+            <input #efectivo="ngModel" class="form-check-input me-5" type="radio" name="efectivo" value="EFECTIVO"
+                [(ngModel)]="compra.metodoPago" (change)="toggle(2)">
+            <h4 class="text-secondary d-inline m-0">Efectivo</h4>
+        </div>
+        <div class="card-body p-5" style="background: #e0e0e0;" *ngIf="metodoEfectivo">
+            <p class="text-secondary mb-5" style="font-size: 20px;">Acercate al punto de pago más cercando y muestra
+                esta
+                información al cajero</p>
+            <div class="row mb-4" style="font-size: 20px;">
+                <div class="col-md-12 text-center text-secondary">
+                    <div class="row">
+                        <p><b>Número de convenio</b></p>
+                        <p>7329887478</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="font-size: 20px;">
+                <div class="col-md-12 text-center text-secondary">
+                    <div class="row">
+                        <p><b>Número de pago</b></p>
+                        <p>6772539253</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success my-5 w-100" [disabled]="f.invalid">Pagar</button>
+</form>

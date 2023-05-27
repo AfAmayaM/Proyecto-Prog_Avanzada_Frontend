@@ -1,1 +1,12 @@
-<p>ofertas works!</p>
+<div class="row">
+    <div *ngFor="let item of ofertas" class="col-sm-4">
+        <div class="card">
+            <span class="icono-etiqueta"><i class="fas fa-tag"></i> Texto</span>          
+            <img src="{{item.producto.imagenes[0]}}" alt="imagen {{item.producto.nombre}}" class="card-img-top">
+            <div class="card-body">
+                <p class="card-text text-center">{{item.producto.nombre}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+             
