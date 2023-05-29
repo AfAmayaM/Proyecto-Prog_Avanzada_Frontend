@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Buffer } from "buffer";
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +28,7 @@ import { BusquedaComponent } from './pagina/busqueda/busqueda.component';
 import { GestionPublicacionesComponent } from './pagina/gestion-publicaciones/gestion-publicaciones.component';
 import { AlertaComponent } from './pagina/alerta/alerta.component';
 import { UsuarioInterceptor } from './interceptor/usuario.interceptor';
+import { RecuperacionContraseniaComponent } from './pagina/recuperacion-contrasenia/recuperacion-contrasenia.component';
 
 @NgModule({
   declarations: [
@@ -48,14 +51,17 @@ import { UsuarioInterceptor } from './interceptor/usuario.interceptor';
     ContactoComponent,
     BusquedaComponent,
     GestionPublicacionesComponent,
-    AlertaComponent
+    AlertaComponent,
+    RecuperacionContraseniaComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: UsuarioInterceptor, multi: true }

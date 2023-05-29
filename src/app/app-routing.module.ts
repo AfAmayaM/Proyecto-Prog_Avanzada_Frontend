@@ -14,17 +14,27 @@ import { CarritoComponent } from './pagina/carrito/carrito.component';
 import { LoginGuard } from './guards/permiso.service';
 import { RolesService as RolesGuard } from './guards/roles.service';
 import { OfertasComponent } from './pagina/ofertas/ofertas.component';
+import { HistorialComprasComponent } from './pagina/historial-compras/historial-compras.component';
+import { CambiarContraseniaComponent } from './pagina/cambiar-contrasenia/cambiar-contrasenia.component';
+import { PerfilComponent } from './pagina/perfil/perfil.component';
+import { RecuperacionContraseniaComponent } from './pagina/recuperacion-contrasenia/recuperacion-contrasenia.component';
+import { FavoritosComponent } from './pagina/favoritos/favoritos.component';
 
 const routes: Routes = [
   { path: '', component: InicioComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
+  { path: 'perfil', component: PerfilComponent },
+  { path: 'recuperar-contra', component: RecuperacionContraseniaComponent },
+  { path: 'cambiar-contra/:cuentaEmail', component: CambiarContraseniaComponent },
   { path: 'publicaciones', component: PublicacionesComponent },
   { path: 'publicar-producto', component: PublicarProductoComponent },
+  { path: 'historial', component: HistorialComprasComponent },
+  { path: 'favoritos', component: FavoritosComponent },
   { path: 'editar-producto/:codigo', component: PublicarProductoComponent },
   { path: 'detalle-producto/:codigo', component: DetalleProductoComponent },
-  { path: 'revisar-publicacion', component: RevisarPublicacionComponent },
-  { path: 'gestion-publicaciones', component: GestionPublicacionesComponent },
+  { path: 'revisar-publicaciones', component: RevisarPublicacionComponent },
+  { path: 'gestionar-publicaciones', component: GestionPublicacionesComponent },
   { path: 'carrito', component: CarritoComponent },
   { path: 'pago', component: PagoComponent },
   { path: 'busqueda/:valor', component: BusquedaComponent },

@@ -7,24 +7,38 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<header class="p-3">
+<header class="p-3 border-bottom">
   <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       <a routerLink="" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
         <i class="fa-solid fa-bag-shopping fs-3"></i>
         <span class="fs-4 ms-3 me-3">{{title}}</span>
       </a>
+
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><a routerLink="" class="nav-link px-2 text-dark">Inicio</a></li>
-        <li><a routerLink="/ofertas" class="nav-link px-2 text-dark">Ofertas</a></li>
-        <li><a routerLink="/publicar-producto" class="nav-link px-2 text-dark">Vender</a></li>
-        <li><a routerLink="/historial" class="nav-link px-2 text-dark">Historial</a></li>
+        <div *ngIf="isLogged && cuenta !== undefined && cuenta.rol === 'Moderador'; then moderadorHeader"></div>
+        <div *ngIf="isLogged && cuenta !== undefined && cuenta.rol === 'Cliente'; then clienteHeader"></div>
+        <div *ngIf="!isLogged; then clienteHeader"></div>
+        <ng-template #moderadorHeader>
+          <li><a routerLink="/revisar-publicaciones" class="nav-link px-2 text-dark">Revisar publicaciones</a></li>
+        </ng-template>
+        <ng-template #clienteHeader>
+          <li><a routerLink="/ofertas" class="nav-link px-2 text-dark">Ofertas</a></li>
+          <li><a routerLink="/publicar-producto" class="nav-link px-2 text-dark">Vender</a></li>
+          <li><a routerLink="/historial" class="nav-link px-2 text-dark">Historial</a></li>
+        </ng-template>
+
       </ul>
-      <a class="me-3 text-dark" routerLink="/carrito"><i class="fa-solid fa-cart-shopping fa-xl carrito"></i></a>
+
+      <a class="me-3 text-dark" routerLink="/carrito"><i class="fa-solid fa-cart-shopping fa-xl carrito"></i>
+        {{productosCarrito !== 0 ? productosCarrito : ''}}</a>
+
       <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" (submit)="iraBusqueda(textoBusqueda.value)">
         <input #textoBusqueda type="search" class="form-control form-control text-bg" placeholder="¿Qué buscas hoy?"
           aria-label="Search">
       </form>
+
       <div *ngIf="!isLogged; then nologged else logged"></div>
       <ng-template #nologged>
         <div class="text-end">
@@ -33,14 +47,35 @@
         </div>
       </ng-template>
       <ng-template #logged>
-        <div class="text-end">
-          <label class="me-3">Hola {{email}}</label>
-          <button type="button" (click)="logout()" class="btn btn-warning">Logout</button>
+
+        <div class="dropdown text-end">
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="fa-regular fa-circle-user fa-2xl"></i>
+          </a>
+          <ul class="dropdown-menu text-small">
+            <h6 class="dropdown-header">{{email}}</h6>
+            <div *ngIf="cuenta !== undefined && cuenta.rol === 'Moderador'; then moderadorPerfil"></div>
+            <div *ngIf="cuenta !== undefined && cuenta.rol === 'Cliente'; then clientePerfil"></div>
+            <ng-template #moderadorPerfil>
+            </ng-template>
+            <ng-template #clientePerfil>
+              <li><a class="dropdown-item" routerLink="/perfil">Perfil</a></li>
+              <li><a class="dropdown-item" routerLink="/gestionar-publicaciones">Publicaciones</a></li>
+              <li><a class="dropdown-item" routerLink="/favoritos">Favoritos</a></li>
+            </ng-template>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+          </ul>
         </div>
+
       </ng-template>
     </div>
   </div>
 </header>
+
 <div class="seccion-pagina p-4">
   <div class="container">
     <router-outlet></router-outlet>

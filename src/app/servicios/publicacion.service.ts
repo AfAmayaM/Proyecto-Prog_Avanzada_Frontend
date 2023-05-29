@@ -15,7 +15,7 @@ import { TokenService } from './token.service';
   providedIn: 'root',
 })
 export class PublicacionService {
-  private publicacionUrl = 'http://localhost:8080/api/publicacion';
+  private publicacionUrl = 'https://proyecto-progavanzada-production.up.railway.app/api/publicacion';
 
   publicaciones: PublicacionGetDTO[];
   constructor(
@@ -25,29 +25,6 @@ export class PublicacionService {
     private http: HttpClient
   ) {
     this.publicaciones = [];
-    /*const productos: ProductoGetDTO[] = productoServicio.listar();
-    for (let i = 0; i < productos.length; i++) {
-      let producto = productos[i];
-      this.publicaciones.push(
-        new PublicacionGetDTO(
-          i + 1,
-          new UsuarioGetDTO(
-            i + 1,
-            'Didier',
-            'rosero',
-            'didier@mail.com',
-            '12345',
-            'Plaza sesamo',
-            '329912938'
-          ),
-          10,
-          'hoy',
-          'Rechazado',
-          [],
-          producto
-        )
-      );
-    }*/
   }
 
   public crear(producto: ProductoDTO): Observable<MensajeDTO> {
@@ -55,25 +32,49 @@ export class PublicacionService {
     publicacion.codigoCuenta = this.tokenServicio.getCodigoCuenta();
     publicacion.descuento = 0;
     publicacion.producto = producto;
-    return this.http.post<MensajeDTO>(
-      `${this.publicacionUrl}/crear`,
-      publicacion
-    );
+    return this.http.post<MensajeDTO>(`${this.publicacionUrl}/crear`, publicacion);
+  }
+
+  public actualizar(codigo:number, publicacion: PublicacionDTO): Observable<MensajeDTO>{
+    return this.http.put<MensajeDTO>(`${this.publicacionUrl}/actualizar/${codigo}`, publicacion);
+  }
+
+  public eliminar(codigo:number): Observable<MensajeDTO>{
+    return this.http.delete<MensajeDTO>(`${this.publicacionUrl}/eliminar/${codigo}`);
   }
 
   public obtener(codigo: number): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(`${this.publicacionUrl}/obtener/${codigo}`);
   }
+
   public listarNombre(nombre: string): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(`${this.publicacionUrl}/listarNombre?nombre=${nombre}`);
   }
-  public listarPrecio(precioMaximo:number, precioMinimo:number): Observable<MensajeDTO> {
+
+  public listarPrecio(precioMinimo:number, precioMaximo:number): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(`${this.publicacionUrl}/listarPrecio?precioMinimo=${precioMinimo}&precioMaximo=${precioMaximo}`);
   }
+
   public listarCategoria(categoria:string): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(`${this.publicacionUrl}/listarCategoria?categoria=${categoria}`);
   }
+
   public listarEstado(estado:string): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(`${this.publicacionUrl}/listarEstado?estado=${estado}`);
+  }
+
+  public listar():Observable<MensajeDTO>{
+    return this.http.get<MensajeDTO>(`${this.publicacionUrl}/listar`);
+  }
+
+  public listarFavoritos(codigoUsuario:number):Observable<MensajeDTO>{
+   return this.http.get<MensajeDTO>(`${this.publicacionUrl}/favoritos/${codigoUsuario}`);
+  }
+  
+  public listarUsuario(codigoUsuario:number):Observable<MensajeDTO>{
+    return this.http.get<MensajeDTO>(`${this.publicacionUrl}/listar/${codigoUsuario}`);
+  }
+  public listarOfertas():Observable<MensajeDTO>{
+    return this.http.get<MensajeDTO>(`${this.publicacionUrl}/listarOfertas`);
   }
 }

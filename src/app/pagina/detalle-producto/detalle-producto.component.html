@@ -15,19 +15,21 @@
         </div>
         <div class="col">
             <div class="card detalle-producto">
-                <h3 class="text-center">{{publicacion.producto.nombre}}</h3>
-                <span class="text-center display-4 mb-5"><b>${{publicacion.producto.precio}}</b></span>
+                <div class="top-right-corner">
+                    <i class="{{favorito ? 'fa-solid' : 'fa-regular'}} fa-heart fa-2xl" role="button"
+                        style="color: #52B9A8;" (click)="favorito ? eliminarFavorito() : agregarFavorito()"></i>
+                </div>
+                <h2 class="text-center">{{publicacion.producto.nombre}}</h2>
+                <span class="text-center display-4 {{publicacion.descuento !== 0 ? '' : 'mb-5'}}"><b>${{publicacion.descuento
+                        !== 0 ? (publicacion.producto.precio * (1-(publicacion.descuento/100))) :
+                        publicacion.producto.precio}}</b></span>
+                <span *ngIf="publicacion.descuento !== 0"
+                    class="text-muted text-center mb-5"><del>${{publicacion.producto.precio}}</del></span>
                 <h5 class="text-secondary mt-3"><b>Descripcion</b></h5>
-                <p class="text-secondary">{{publicacion.producto.descripcion}}</p>
+                <p>{{publicacion.producto.descripcion}}</p>
                 <div class="row mt-3">
-                    <div class="col">
-                        <h5 class="text-secondary"><b>Estado</b></h5>
-                        <p></p>
-                    </div>
-                    <div class="col">
-                        <h5 class="text-secondary"><b>Vendido por</b></h5>
-                        <!--<p>{{publicacion.vendedor.nombre+publicacion.vendedor.apellido}}</p>-->
-                    </div>
+                    <h5 class="text-secondary"><b>Vendido por</b></h5>
+                    <p>{{vendedor.nombre+vendedor.apellido}}</p>
                 </div>
                 <h5 class="text-secondary mt-3"><b>Cantidad</b></h5>
                 <div class="row mb-4">
@@ -42,21 +44,21 @@
                 </div>
                 <button (click)="agregarCarrito()" class="btn btn-outline-primary my-3"><i class="fa-solid
                     fa-cart-plus me-2"></i>Agregar al carrito</button>
-                <button class="btn btn-success" routerLink="/pago">Comprar</button>
+                <button class="btn btn-success" routerLink="/pago" (click)="comprar()">Comprar</button>
             </div>
         </div>
     </div>
     <div class="row mt-3">
         <h5 class="text-secondary"><b>Comentarios</b></h5>
         <div class="col">
-            <div *ngFor="let comentario of publicacion.comentarios" class="row mt-2">
-                <h6>{{comentario.codigoUsuario}}</h6>
-                <p>{{comentario.mensaje}}</p>
+            <div *ngFor="let comentario of comentarios" class="row mt-2">
+                <h6>{{comentario.usuario.nombre+comentario.usuario.apellido}}</h6>
+                <p>{{comentario.comentario.mensaje}}</p>
+                <hr>
             </div>
             <div *ngIf="publicacion.comentarios.length == 0"
                 class="d-flex align-items-center justify-content-center mt-2">
-                <i class="fa-solid fa-comment-slash fa-xl"></i><i class="fa-solid fa-comments fa-xl"></i><i
-                    class="fa-regular fa-comments fa-xl"></i><span class="ms-3">No hay comentarios en esta
+                <i class="fa-solid fa-comment-slash fa-xl"></i><span class="ms-3">No hay comentarios en esta
                     publicación</span>
             </div>
             <div class="container mt-5">
@@ -65,7 +67,7 @@
                     <textarea #comentarioMensaje="ngModel" [(ngModel)]="comentario.mensaje" class="form-control w-100"
                         name="comentarioMensaje" rows="6" placeholder="Deja tu comentario..."
                         maxlength="{{limiteCaracteres}}"></textarea>
-                    <button type="submit" class="btn corner-button"><i class="fa-regular fa-paper-plane fa-2xl"
+                    <button type="submit" class="btn right-bottom-corner"><i class="fa-regular fa-paper-plane fa-2xl"
                             style="color: #52B9A8;"></i></button>
                 </form>
             </div>

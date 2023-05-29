@@ -1,12 +1,20 @@
-<form #f="ngForm" (submit)="cambiarContra()">
-    <div class="mb-3 row">
-        <label class="col-sm-2 col-form-label">Email: </label>
-        <div class="col-sm-10">
-
-            <input #email="ngModel" class="form-control" [ngClass]="email.invalid &&    
-(email.dirty || email.touched) ? 'is-invalid' : ''" type="email" name="email" [(ngModel)]="cuenta.email" email
-                required />
-
-        </div>
+<div class="card">
+    <div class="card-body p-5">
+        <h2 class="text-center mb-5">Cambiar contraseña</h2>
+        <p class="text-center lead text-secondary mb-5"><b>Ingresa tu nueva contraseña</b></p>
+        <form #f="ngForm" (submit)="cambiarContra()">
+            <div class="row d-flex justify-content-center mb-5">
+                <div class="col-6">
+                    <div class="row mb-3">
+                        <input #contrasenia="ngModel" class="form-control mb-3" [ngClass]="contrasenia.invalid &&    
+                        (contrasenia.dirty || contrasenia.touched) ? 'is-invalid' : ''" type="password" name="contrasenia"
+                        [(ngModel)]="cuenta.contrasenia" placeholder="Contraseña" required />
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <button class="btn btn-primary" type="submit">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-</form>
+</div>

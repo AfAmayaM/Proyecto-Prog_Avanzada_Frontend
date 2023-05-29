@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenService } from './servicios/token.service';
 import { SesionService } from './servicios/sesion.service';
+import { CuentaGetDTO } from './modelo/cuenta-get-dto';
+import { CuentaService } from './servicios/cuenta.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -10,15 +13,19 @@ import { SesionService } from './servicios/sesion.service';
 })
 export class AppComponent {
   title = 'Unimarket';
-  fecha = 'Abril de 2023';
+  fecha = 'Mayo de 2023';
   isLogged = false;
   email: string = '';
+  productosCarrito: number = 0;
+  cuenta!: CuentaGetDTO;
 
   constructor(
     private router: Router,
     private tokenService: TokenService,
-    private sesionServicio: SesionService
-  ) {}
+    private cuentaServicio: CuentaService,
+    private sesionServicio: SesionService,
+    private toast: ToastrService
+  ) { }
 
   ngOnInit(): void {
     const objeto = this;
@@ -28,20 +35,27 @@ export class AppComponent {
       }
     });
     this.actualizarSesion(this.tokenService.isLogged());
-    this.isLogged = this.tokenService.isLogged();
-    if (this.isLogged) {
-      this.email = this.tokenService.getEmail();
-    }
   }
+
   private actualizarSesion(estado: boolean) {
     this.isLogged = estado;
     if (estado) {
-    this.email = this.tokenService.getEmail();
-    }else{
+      this.email = this.tokenService.getEmail();
+      this.cuentaServicio.buscarCuenta(this.email).subscribe({
+        next: data => {
+          this.cuenta = data.respuesta;
+        },
+        error: error => {
+          this.toast.error(error.error.respuesta);
+        }
+      });
+    } else {
       this.email = "";
     }
   }
+
   public logout() {
+    this.isLogged = false;
     this.tokenService.logout();
   }
 

@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col-5 d-flex align-items-center justify-content-center">
+        <span class="display-1"><i class="fa-solid fa-circle-user fa-2xl"></i></span>
+    </div>
+    <div class="col-7">
+        <div class="card p-3">
+            <div class="card-body">
+                <h2 class="text-center mb-5">Mi cuenta</h2>
+                <div class="row d-flex align-items-center justify-content-center mb-3">
+                    <div class="col-10">
+                        <form #f="ngForm" (submit)="modificarCuenta()">
+                            <div class="row">
+                                <label class="form-label text-secondary" for=""><b>Nombre</b></label>
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <input #nombre class="form-control" type="text" [(ngModel)]="usuario.nombre" name="nombre" disabled>
+                                </div>
+                                <div class="col-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-regular fa-pen-to-square fa-2xl" role="button" style="color: #52B9A8;" (click)="desactivar(nombre)"></i>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <label class="form-label text-secondary" for=""><b>Apellido</b></label>
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <input #apellido class="form-control" type="text" [(ngModel)]="usuario.apellido" name="apellido" disabled>
+                                </div>
+                                <div class="col-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-regular fa-pen-to-square fa-2xl" role="button" style="color: #52B9A8;" (click)="desactivar(apellido)"></i>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <label class="form-label text-secondary" for=""><b>Teléfono</b></label>
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <input #telefono class="form-control" type="text" [(ngModel)]="usuario.telefono" name="telefono" disabled>
+                                </div>
+                                <div class="col-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-regular fa-pen-to-square fa-2xl" role="button" style="color: #52B9A8;" (click)="desactivar(telefono)"></i>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <label class="form-label text-secondary" for=""><b>Dirección</b></label>
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <input #direccion class="form-control" type="text" [(ngModel)]="usuario.direccion" name="direccion" disabled>
+                                </div>
+                                <div class="col-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-regular fa-pen-to-square fa-2xl" role="button" style="color: #52B9A8;" (click)="desactivar(direccion)"></i>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <label class="form-label text-secondary" for=""><b>Email</b></label>
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <input #cuentaEmail class="form-control" type="email" [(ngModel)]="usuario.email" name="email" email disabled>
+                                </div>
+                                <div class="col-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-regular fa-pen-to-square fa-2xl" role="button" style="color: #52B9A8;" (click)="desactivar(cuentaEmail)"></i>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-10">
+                                    <label class="form-label text-secondary" for=""><b>Contraseña</b></label>
+                                </div>
+                                <div class="col-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-regular fa-pen-to-square fa-2xl" role="button" style="color: #52B9A8;" (click)="recuperarContra()"></i>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success mt-5 w-100">Guardar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

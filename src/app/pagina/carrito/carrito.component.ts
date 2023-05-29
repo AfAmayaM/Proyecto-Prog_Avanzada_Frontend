@@ -25,7 +25,6 @@ export class CarritoComponent {
     this.infoMostrar = [];
     this.valorTotal = 0;
     this.valorProducto = 0;
-    //const publicaciones = this.carritoService.listar();
     this.detalles = this.carritoService.listar();
     if (this.detalles.length > 0) {
       for (let detalle of this.detalles) {
@@ -34,9 +33,10 @@ export class CarritoComponent {
             const publicacion = data.respuesta;
             if (publicacion != null) {
               this.publicaciones.push(publicacion);
-              detalle.valorTotal = publicacion.producto.precio * detalle.unidades;
+              detalle.precioUnidad = publicacion.producto.precio;
+              detalle.valorTotal = (publicacion.producto.precio * (1 - (publicacion.descuento/100)))* detalle.unidades;
               this.valorTotal += detalle.valorTotal;
-              const info = { publicacion: publicacion, detalle: detalle };
+              const info = { publicacion: publicacion, detalle: detalle};
               this.infoMostrar.push(info);
             }
           },
@@ -48,8 +48,12 @@ export class CarritoComponent {
     }
   }
 
+  public actualizarUnidades(info: any, unidades: any) {
+    info.detalle.unidades = Number.parseInt(unidades);
+  }
+
   public calcularValor(info: any) {
-    info.detalle.valorTotal = info.publicacion.producto.precio * info.detalle.unidades;
+    info.detalle.valorTotal = (info.publicacion.producto.precio * (1 - (info.publicacion.descuento/100))) * info.detalle.unidades;
 
     let total = 0;
     for (let info of this.infoMostrar) {
@@ -73,6 +77,8 @@ export class CarritoComponent {
     console.log(index);
     if (borrar) {
       this.infoMostrar.splice(index, 1);
+      this.detalles.splice(index, 1);
+      this.publicaciones.splice(index, 1);
     } else {
       this.detalles[index].unidades = 1;
     }

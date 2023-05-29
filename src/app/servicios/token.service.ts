@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SesionService } from './sesion.service';
 import { Buffer } from 'buffer';
 import { AuthService } from './auth.service';
+import { CuentaService } from './cuenta.service';
 
 const TOKEN_KEY = 'AuthToken';
 const CODIGO_CUENTA = 'CodigoCuenta';
@@ -11,7 +12,7 @@ const CODIGO_CUENTA = 'CodigoCuenta';
   providedIn: 'root',
 })
 export class TokenService {
-  constructor(private router: Router, private sesionServicio: SesionService, private authServicio: AuthService) { }
+  constructor(private router: Router, private sesionServicio: SesionService, private cuentaServicio: CuentaService) { }
 
   public setToken(token: string) {
     window.sessionStorage.removeItem(TOKEN_KEY);
@@ -30,7 +31,7 @@ export class TokenService {
 
   public login(token: string) {
     this.setToken(token);
-    this.authServicio.buscarCuenta(this.getEmail()).subscribe({
+    this.cuentaServicio.buscarCuenta(this.getEmail()).subscribe({
       next: data => {
         window.sessionStorage.removeItem(CODIGO_CUENTA);
         window.sessionStorage.setItem(CODIGO_CUENTA, data.respuesta.codigoCuenta);

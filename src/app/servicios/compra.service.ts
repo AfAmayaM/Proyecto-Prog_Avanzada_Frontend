@@ -11,7 +11,7 @@ import { DetalleCompraDTO } from '../modelo/detalle-compra-dto';
 })
 export class CompraService {
 
-  private compraUrl = "http://localhost:8080/api/compra";
+  private compraUrl = "https://proyecto-progavanzada-production.up.railway.app/api/compra";
 
   private static compra: CompraDTO = new CompraDTO();
 
@@ -19,18 +19,22 @@ export class CompraService {
 
   public agregarDetalles(detalles: DetalleCompraDTO[]) {
     CompraService.compra.detalleCompra = detalles;
+    console.log(CompraService.compra.detalleCompra);
   }
 
   public cambiarMetodoPago(metodoPago: string) {
     CompraService.compra.metodoPago = metodoPago;
   }
 
-  public cambiarEmail(email: string) {
-    CompraService.compra.email = email;
+  public cambiarCodigoUsuario(codigo: number) {
+    CompraService.compra.codigoUsuario = codigo;
   }
 
   public comprar(): Observable<MensajeDTO> {
-    console.log(CompraService.compra);
     return this.http.post<MensajeDTO>(`${this.compraUrl}/crear`, CompraService.compra);
+  }
+
+  public listarCompras(codigoUsuario: number): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(`${this.compraUrl}/listar/${codigoUsuario}`);
   }
 }

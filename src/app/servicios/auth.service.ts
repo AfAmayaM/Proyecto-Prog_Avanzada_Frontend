@@ -8,7 +8,7 @@ import { UsuarioDTO } from '../modelo/usuario-dto';
   providedIn: 'root',
 })
 export class AuthService {
-  private authURL = 'http://localhost:8080/api';
+  private authURL = 'https://proyecto-progavanzada-production.up.railway.app/api';
   constructor(private http: HttpClient) {}
 
   public registrar(usuario: UsuarioDTO): Observable<MensajeDTO> {
@@ -17,9 +17,5 @@ export class AuthService {
 
   public login(sesion: SesionDTO): Observable<MensajeDTO> {
     return this.http.post<MensajeDTO>(`${this.authURL}/auth/login`, sesion);
-  }
-
-  public buscarCuenta(email: string): Observable<MensajeDTO> {
-    return this.http.get<MensajeDTO>(`${this.authURL}/cuenta/obtenerCuentaEmail?email=${email}`);
   }
 }

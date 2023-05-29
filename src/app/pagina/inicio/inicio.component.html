@@ -2,10 +2,7 @@
     <h2 class="text-center">Categorías</h2>
     <div class="row d-flex align-items-center justify-content-center">
         <div *ngFor="let item of categorias" class="col-sm-4 my-4 d-flex align-items-center justify-content-center">
-            <button (click)="iraBusqueda(item)" class="btn btn-categoria">{{item}}</button>
+            <button (click)="iraBusqueda(item)" class="btn btn-primary w-100">{{item}}</button>
         </div>
     </div>
-</div>
-<div class="recientes text-center">
-    <h2>Vistos recientemente...</h2>
 </div>

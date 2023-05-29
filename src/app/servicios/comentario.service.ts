@@ -9,7 +9,7 @@ import { ComentarioDTO } from '../modelo/comentario-dto';
 })
 export class ComentarioService {
 
-  private comentarioUrl = "http://localhost:8080/api/comentario"
+  private comentarioUrl = "https://proyecto-progavanzada-production.up.railway.app/api/comentario"
 
   constructor(private http: HttpClient) { }
 

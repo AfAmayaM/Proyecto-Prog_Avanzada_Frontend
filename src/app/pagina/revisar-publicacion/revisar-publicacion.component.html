@@ -1,3 +1,12 @@
+<div class="d-flex align-items-center justify-content-end my-4">
+    <span class="me-4 d-inline">Filtar: </span>
+    <select class="form-control d-inline w-25" name="estado" [(ngModel)]="estado" (change)="listarEstado()">
+        <option value="" selected>Seleccione un estado</option>
+        <option value="AUTORIZADO">Autorizado</option>
+        <option value="DENEGADO">Denegado</option>
+        <option value="SIN_REVISAR">Sin revisar</option>
+    </select>
+</div>
 <div class="card p-4">
     <table class="table table-striped table-hover">
         <thead>
@@ -15,7 +24,7 @@
         <tbody class="table-group-divider">
             <tr *ngFor="let item of publicaciones">
                 <td>
-                    <p>{{item.producto.codigo}}</p>
+                    <p>{{item.codigo}}</p>
                 </td>
                 <td>
                     <p>{{item.producto.nombre}}</p>
@@ -24,7 +33,7 @@
                     <p>{{item.producto.descripcion}}</p>
                 </td>
                 <td>
-                    <p>{{item.producto.precio}}</p>
+                    <p>${{item.producto.precio}}</p>
                 </td>
                 <td>
                     <p>{{item.producto.unidades}}</p>
@@ -34,13 +43,13 @@
                     <p>{{item.producto.categorias}}</p>
                 </td>
                 <td [ngSwitch]="item.estado">
-                    <p class="text-success" *ngSwitchCase="'Aprobado'"><i class="fa-solid fa-circle-check fa-lg me-1"></i> Aprobado</p>
-                    <p class="text-danger" *ngSwitchCase="'Rechazado'"><i class="fa-solid fa-circle-xmark fa-lg me-1"></i> Rechazado</p>
-                    <div *ngSwitchCase="'Sin revisar'">
-                        <button type="button" class="btn btn-success me-2"><i class="fa-solid fa-circle-check me-1"></i>
-                            Aprobar</button>
-                        <button type="button" class="btn btn-danger"><i class="fa-solid fa-circle-xmark me-1"></i>
-                            Rechazar</button>
+                    <p class="text-success" *ngSwitchCase="'AUTORIZADO'"><i class="fa-solid fa-circle-check fa-lg me-1"></i> Autorizado</p>
+                    <p class="text-danger" *ngSwitchCase="'DENEGADO'"><i class="fa-solid fa-circle-xmark fa-lg me-1"></i> Denegado</p>
+                    <div *ngSwitchCase="'SIN_REVISAR'">
+                        <button type="button" class="btn btn-success me-2" (click)="cambiarEstado(item.codigoCuenta, item.codigo, 'AUTORIZADO')"><i class="fa-solid fa-circle-check me-1"></i>
+                            Autorizar</button>
+                        <button type="button" class="btn btn-danger" (click)="cambiarEstado(item.codigoCuenta, item.codigo, 'DENEGADO')"><i class="fa-solid fa-circle-xmark me-1"></i>
+                            Denegar</button>
                     </div>
                 </td>
             </tr>

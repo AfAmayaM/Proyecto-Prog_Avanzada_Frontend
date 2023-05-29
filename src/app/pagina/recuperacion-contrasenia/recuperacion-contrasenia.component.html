@@ -1,0 +1,20 @@
+<div class="card">
+    <div class="card-body p-5">
+        <h2 class="text-center mb-5">Recuperar contraseña</h2>
+        <p class="text-center lead text-secondary mb-5"><b>Ingresa tu correo electrónico, enviaremos un enlace para que crees una nueva contraseña</b></p>
+        <form #f="ngForm" (submit)="recuperarContra()">
+            <div class="row d-flex justify-content-center mb-5">
+                <div class="col-6">
+                    <div class="row mb-3">
+                        <input #email="ngModel" class="form-control mb-3" [ngClass]="email.invalid &&    
+                        (email.dirty || email.touched) ? 'is-invalid' : ''" type="email" name="email"
+                        [(ngModel)]="cuentaEmail" placeholder="Email" email required />
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <button class="btn btn-primary" type="submit">Solicitar cambio</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

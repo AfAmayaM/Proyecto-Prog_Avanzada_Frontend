@@ -1,12 +1,18 @@
 <div class="row">
+    <h1 class="text-center mb-5">Ofertas</h1>
     <div *ngFor="let item of ofertas" class="col-sm-4">
-        <div class="card">
-            <span class="icono-etiqueta"><i class="fas fa-tag"></i> Texto</span>          
-            <img src="{{item.producto.imagenes[0]}}" alt="imagen {{item.producto.nombre}}" class="card-img-top">
+        <div class="card" role="button" routerLink="/detalle-producto/{{item.codigo}}">
+            <img [src]="item.producto.imagenes[0]" alt="imagen {{item.producto.nombre}}" class="card-img-top">
             <div class="card-body">
-                <p class="card-text text-center">{{item.producto.nombre}}</p>
+                <div class="mask">
+                    <div class="d-flex justify-content-start align-items-end h-100">
+                        <h5><span class="badge bg-warning ms-2">-{{item.descuento}}%</span></h5>
+                    </div>
+                </div>
+                <h3 class="card-title text-center text-secondary">{{item.producto.nombre}}</h3>
+                <p class="text-center display-4"><b>${{(item.producto.precio * (1-(item.descuento/100)))}}</b></p>
+                <p class="card-text text-center text-muted"><del>${{item.producto.precio}}</del></p>
             </div>
         </div>
     </div>
 </div>
-             

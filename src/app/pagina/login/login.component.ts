@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { Alerta } from 'src/app/modelo/alerta';
 import { SesionDTO } from 'src/app/modelo/sesion-dto';
 import { AuthService } from 'src/app/servicios/auth.service';
@@ -17,7 +18,7 @@ export class LoginComponent {
   loginForm!: FormGroup;
   alerta!: Alerta;
 
-  constructor(private formBuilder: FormBuilder, private authServicio: AuthService, private tokenServicio: TokenService) {
+  constructor(private formBuilder: FormBuilder, private authServicio: AuthService, private tokenServicio: TokenService, private toast: ToastrService) {
     this.sesion = new SesionDTO();
   }
 
@@ -26,9 +27,10 @@ export class LoginComponent {
     this.authServicio.login(this.sesion).subscribe({
       next: data => {
         objeto.tokenServicio.login(data.respuesta.token);
+        this.toast.info("Bienvenido " + this.tokenServicio.getEmail());
       },
       error: error => {
-        objeto.alerta = new Alerta(error.error.respuesta, "danger");
+        this.toast.error(error.error.respuesta);
       }
     });
 

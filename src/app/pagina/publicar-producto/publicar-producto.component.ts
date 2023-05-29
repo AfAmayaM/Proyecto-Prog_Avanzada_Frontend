@@ -8,6 +8,9 @@ import { CategoriaService } from 'src/app/servicios/categoria.service';
 import { ImagenService } from 'src/app/servicios/imagen.service';
 import { ProductoService } from 'src/app/servicios/producto.service';
 import { PublicacionService } from 'src/app/servicios/publicacion.service';
+import { TokenService } from 'src/app/servicios/token.service';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-publicar-producto',
   templateUrl: './publicar-producto.component.html',
@@ -34,7 +37,7 @@ export class PublicarProductoComponent implements OnInit {
   codigoProducto: number;
   alerta!: Alerta;
 
-  constructor(private router: ActivatedRoute, private productoServicio: ProductoService, private publicacionServicio: PublicacionService, private imagenServicio: ImagenService, private categoriaServicio: CategoriaService) {
+  constructor(private router: ActivatedRoute, private productoServicio: ProductoService, private publicacionServicio: PublicacionService, private imagenServicio: ImagenService, private categoriaServicio: CategoriaService, private tokenServicio: TokenService, private toast: ToastrService) {
     this.publicacion = new PublicacionDTO;
     this.producto = new ProductoDTO;
     this.publicacion.producto = this.producto;
@@ -42,16 +45,19 @@ export class PublicarProductoComponent implements OnInit {
     this.codigoProducto = 0;
     this.router.params.subscribe(params => {
       this.codigoProducto = params["codigo"];
-      let objetoProducto = this.productoServicio.obtener(this.codigoProducto);
-      if (objetoProducto != null) {
-        this.producto = objetoProducto;
-        this.esEdicion = true;
+      if (this.codigoProducto !== undefined) {
+        this.publicacionServicio.obtener(this.codigoProducto).subscribe({
+          next: data => {
+            this.publicacion = data.respuesta;
+            this.producto = this.publicacion.producto;
+            this.cargarCategoriasProducto();
+          },
+          error: error => {
+            this.toast.error(error.error.respuesta);
+          }
+        });
       }
     });
-    this.cargarCategorias();
-    if (this.esEdicion) {
-      this.cargarCategoriasProducto();
-    }
   }
 
   ngOnInit(): void {
@@ -81,14 +87,14 @@ export class PublicarProductoComponent implements OnInit {
       const objeto = this;
       this.publicacionServicio.crear(this.producto).subscribe({
         next: (data) => {
-          objeto.alerta = new Alerta(data.respuesta, "success");
+          this.toast.success(data.respuesta);
         },
         error: (error) => {
-          objeto.alerta = new Alerta(error.respuesta, "success");
+          this.toast.error(error.error.respuesta);
         }
       });
     } else {
-      console.log('Debe seleccionar al menos una imagen y subirla');
+      this.toast.warning('Debe seleccionar al menos una imagen y subirla');
     }
   }
 
@@ -101,32 +107,31 @@ export class PublicarProductoComponent implements OnInit {
         this.imagenServicio.subir(formData).subscribe({
           next: (data) => {
             objeto.producto.imagenes.push(data.respuesta.url);
-            console.log("Imagenes subidas " + data.respuesta.url);
-            objeto.alerta = new Alerta(data.respuesta, "success");
+            this.toast.success("Imagenes subidas correctamente.")
           },
           error: (error) => {
-            objeto.alerta = new Alerta(error.respuesta, "error");
+            this.toast.error(error.error.respuesta);
           }
         });
       }
-      console.log(objeto.producto.imagenes);
     } else {
-      console.log('Debe seleccionar al menos una imagen y subirla');
+      this.toast.warning('Debe seleccionar al menos una imagen y subirla');
     }
   }
 
-  private cargarCategorias() {
-    this.categoriaServicio.listar().subscribe({
+  public actualizarPublicacion() {
+    this.publicacionServicio.actualizar(this.tokenServicio.getCodigoCuenta(), this.publicacion).subscribe({
       next: data => {
-        ;
+        this.toast.success(data.respuesta);
       },
       error: error => {
-        console.log(error.error);
+        this.toast.error(error.error.respuesta);
       }
     });
   }
 
   private cargarCategoriasProducto() {
+    this.esEdicion = true;
     for (let categoria of this.producto.categorias) {
       let index = this.categorias.findIndex(c => c.name === categoria);
       if (index !== -1) {
@@ -134,8 +139,6 @@ export class PublicarProductoComponent implements OnInit {
       }
     }
   }
-
-
 }
 
 interface Categoria {

@@ -14,6 +14,7 @@ export class CarritoService {
 
   public agregar(detalle: DetalleCompraDTO) {
     let index = this.publicaciones.findIndex(p => p.codigoPublicacion === detalle.codigoPublicacion);
+    console.log(index);
     if(index !== -1) {
       this.publicaciones[index].unidades += detalle.unidades;
     } else {

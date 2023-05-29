@@ -28,6 +28,7 @@ header {
     color: #52B9A8;
 }
 
+
 .detalle-producto {
     padding: 50px;
     border: 2px dashed #777;
@@ -36,6 +37,10 @@ header {
 
 .nav-link:hover {
     color: #343434;
+}
+
+.dropdown-item:hover {
+    cursor: pointer;
 }
 
 .btn-categoria {
@@ -52,7 +57,7 @@ header {
 }
 
 .carrito:hover {
-    color: #343434;
+    color: #555;
 }
 
 .img-gallery {
@@ -93,7 +98,25 @@ header {
     position: relative;
 }
 
-.corner-button {
+.top-left-corner {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+.top-right-corner {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+
+.right-left-corner {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+}
+
+.right-bottom-corner {
     position: absolute;
     bottom: 15px;
     right: 15px;
@@ -105,4 +128,3 @@ header {
     bottom: 20px;
     color: gray;
   }
-  

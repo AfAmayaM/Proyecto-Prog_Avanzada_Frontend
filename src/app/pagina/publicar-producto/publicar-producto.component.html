@@ -5,15 +5,6 @@
             <div class="row mb-2" *ngIf="archivos != null">
                 <img [src]="getObjectURL(archivos[0])" class="w-100" alt="imagen-producto">
             </div>
-            <div class="row mb-4" *ngIf="archivos != null">
-                <div class="carousel">
-                    <div class="carousel-inner">
-                        <div *ngFor="let imagen of archivos" class="">
-                            <img [src]="getObjectURL(imagen)" class="img-thumbnail" alt="img-producto">
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="row mb-3">
                 <input type="file" class="form-control w-75 mx-auto" name="imagenes" (change)="onFileChange($event)"
                     multiple />
@@ -30,31 +21,29 @@
                 <div class="row">
                     <label class="col-sm-2 col-form-label text-secondary"><b>Nombre</b></label>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12 form-outline">
-                        <input #nombre="ngModel" class="form-control" [ngClass]=" nombre.invalid && (nombre.dirty || nombre.touched)
+                <div class="col-sm-12 form-outline">
+                    <input #nombre="ngModel" class="form-control" [ngClass]=" nombre.invalid && (nombre.dirty || nombre.touched)
                   ? 'is-invalid' : '' " type="text" name="nombre" [(ngModel)]="producto.nombre" required
-                            maxlength="50" />
-                    </div>
+                        maxlength="50" />
                 </div>
             </div>
             <div class="mb-3 row">
                 <div class="row">
                     <label class="col-sm-2 col-form-label text-secondary"><b>Descripción</b></label>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <textarea #descripcion="ngModel" class="form-control" [ngClass]="
+                <div class="col-sm-12">
+                    <textarea #descripcion="ngModel" class="form-control" [ngClass]="
                 descripcion.invalid &&
                 (descripcion.dirty || descripcion.touched)
                   ? 'is-invalid'
                   : ''
               " type="number" name="descripcion" [(ngModel)]="producto.descripcion" required></textarea>
-                    </div>
                 </div>
             </div>
             <div class="mb-3 row">
-                <label class="col-sm-3 col-form-label text-secondary"><b>Categorias</b></label>
+                <div class="row">
+                    <label class="col-sm-3 col-form-label text-secondary"><b>Categorias</b></label>
+                </div>
                 <div class="d-flex flex-wrap">
                     <div *ngFor="let categoria of categorias" class="d-inline-flex align-items-center me-3">
                         <input class="form-check-input me-2" type="checkbox" [name]="categoria.name"
@@ -93,7 +82,18 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" [disabled]="f.invalid" (click)="crearPublicacion()"
+            <div class="mb-3 row" *ngIf="esEdicion">
+                <div class="row">
+                    <label class="col-sm-4 col-form-label text-secondary"><b>Descuento (%)</b></label>
+                </div>
+                <div class="col-sm-12 form-outline">
+                    <input #descuento="ngModel" class="form-control" [ngClass]=" descuento.invalid && (descuento.dirty || nombre.touched)
+                  ? 'is-invalid' : '' " type="number" name="descuento" [(ngModel)]="publicacion.descuento" required min="0"
+                        max="90" />
+                </div>
+            </div>
+            <button type="submit" [disabled]="f.invalid"
+                (click)="esEdicion ? actualizarPublicacion() : crearPublicacion() "
                 class="btn {{ esEdicion ? 'btn-primary' : 'btn-success' }} w-100 mt-3">
                 <i class="fa-solid {{ esEdicion ? 'fa-pencil' : 'fa-circle-plus' }} me-1"></i>{{ esEdicion ? "Modificar"
                 : "Publicar" }}

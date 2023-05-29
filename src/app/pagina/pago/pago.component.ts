@@ -3,6 +3,7 @@ import { CompraDTO } from 'src/app/modelo/compra-dto';
 import { TarjetaDTO } from 'src/app/modelo/tarjeta-dto';
 import { CompraService } from 'src/app/servicios/compra.service';
 import { TokenService } from 'src/app/servicios/token.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-pago',
@@ -16,20 +17,20 @@ export class PagoComponent {
   metodoTarjeta: boolean = false;
   metodoEfectivo: boolean = false;
 
-  constructor(private compraServicio: CompraService, private tokenServicio: TokenService) {
+  constructor(private compraServicio: CompraService, private tokenServicio: TokenService, private toast: ToastrService) {
     this.compra = new CompraDTO();
     this.tarjeta = new TarjetaDTO();
   }
 
   public pagar() {
-    console.log(this.tarjeta);
-    this.compraServicio.cambiarEmail(this.tokenServicio.getEmail());
+    this.compraServicio.cambiarCodigoUsuario(this.tokenServicio.getCodigoCuenta());
     this.compraServicio.comprar().subscribe({
       next: data => {
         console.log(data.respuesta);
+        this.toast.success(data.respuesta);
       },
       error: error => {
-        console.log(error.error);
+        this.toast.error(error.error.respuesta);
       }
     });
   }
